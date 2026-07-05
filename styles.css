@@ -1,0 +1,489 @@
+/* ============================================================
+   Razzberry Jam — styles.css
+   Every value traces to DESIGN.md. Zero shadows. Flat everything.
+   ============================================================ */
+
+:root {
+  /* Colors — brand */
+  --color-paper: #F5F4F0;
+  --color-paper-dim: #E9E7E0;
+  --color-ink: #0A0A0A;
+  --color-razz-red: #EE3D43;
+  --color-ice-blue: #B7ECF3;
+  --color-leaf-green: #B5DB8B;
+  --color-char: #141414;
+  --gradient-divider: linear-gradient(90deg, #B7ECF3 40%, #F5F4F0 100%);
+
+  /* Typography */
+  --font-display: 'Space Grotesk', Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+
+  --text-display: clamp(56px, 9vw, 112px);
+  --leading-display: 0.95;
+  --tracking-display: -0.03em;
+  --text-heading: 40px;
+  --leading-heading: 1.05;
+  --tracking-heading: -0.02em;
+  --text-heading-sm: 24px;
+  --text-subheading: 20px;
+  --text-body: 17px;
+  --leading-body: 1.55;
+  --text-body-sm: 14px;
+  --text-label: 13px;
+  --text-eyebrow: 12px;
+  --tracking-eyebrow: 0.02em;
+
+  /* Spacing & layout */
+  --spacing-8: 8px;  --spacing-16: 16px; --spacing-24: 24px;
+  --spacing-40: 40px; --spacing-56: 56px; --spacing-80: 80px; --spacing-96: 96px;
+  --section-gap: 80px;
+  --element-gap: 12px;
+  --page-max-width: 1280px;
+
+  /* Radius */
+  --radius-buttons: 9999px;
+  --radius-navpill: 64px;
+  --radius-media: 0px;
+  --radius-inputs: 2px;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+/* ---------- Type roles ---------- */
+.display {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: 700;
+  text-wrap: balance;
+}
+h2, .heading {
+  font-size: var(--text-heading);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  font-weight: 700;
+}
+.heading-sm { font-size: var(--text-heading-sm); line-height: 1.2; letter-spacing: -0.01em; font-weight: 500; }
+.subheading { font-size: var(--text-subheading); line-height: 1.35; font-weight: 400; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: var(--spacing-16);
+}
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+/* ---------- Layout helpers ---------- */
+.container { max-width: var(--page-max-width); margin: 0 auto; padding: 0 var(--spacing-24); }
+section { padding: var(--spacing-80) 0; }
+
+/* Two-column section header (Telepathic) */
+.section-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-40);
+  align-items: end;
+  margin-bottom: var(--spacing-40);
+}
+.section-header p { max-width: 480px; }
+
+/* Gradient divider — the only gradient in the system */
+.divider { height: 2px; border: 0; background: var(--gradient-divider); }
+
+/* Ice masthead stripes (Sing-sing, recolored) */
+.stripes {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--color-ice-blue) 0, var(--color-ice-blue) 1px,
+    transparent 1px, transparent 14px
+  );
+}
+
+/* ---------- Nav — floating char pill ---------- */
+.nav-wrap {
+  position: fixed;
+  top: var(--spacing-24);
+  left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+  pointer-events: none;
+  padding: 0 var(--spacing-16);
+}
+.nav {
+  pointer-events: auto;
+  background: var(--color-char);
+  border-radius: var(--radius-navpill);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-24);
+  padding: 10px 14px 10px 24px;
+}
+.nav .wordmark {
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav ul { display: flex; list-style: none; gap: var(--spacing-24); }
+.nav ul a {
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.nav ul a:hover, .nav ul a[aria-current="page"] { color: var(--color-ice-blue); }
+
+/* ---------- Buttons — pills only ---------- */
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--radius-buttons);
+  padding: 16px 28px;
+  line-height: 1;
+}
+.btn-red { background: var(--color-razz-red); color: #fff; }
+.btn-red:hover { background: var(--color-ink); }
+.btn-ink { background: var(--color-ink); color: var(--color-paper); }
+.btn-ink:hover { background: var(--color-razz-red); color: #fff; }
+.btn-ghost { background: transparent; color: var(--color-ink); border: 1px solid var(--color-ink); }
+.btn-ghost:hover { background: var(--color-ink); color: var(--color-paper); }
+.btn-ghost.on-dark { color: var(--color-paper); border-color: var(--color-paper); }
+.btn-ghost.on-dark:hover { background: var(--color-paper); color: var(--color-ink); }
+.nav .btn { padding: 12px 20px; }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding-top: 160px;
+  padding-bottom: var(--spacing-80);
+  position: relative;
+}
+.hero .eyebrow { color: var(--color-ink); }
+.hero-stripes {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 220px;
+  z-index: -1;
+}
+.hero .display { max-width: 20ch; }
+.hero .sub {
+  font-size: var(--text-subheading);
+  max-width: 560px;
+  margin-top: var(--spacing-24);
+}
+.hero .cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--element-gap);
+  margin-top: var(--spacing-40);
+  align-items: center;
+}
+
+/* ---------- Hero logo lockup ---------- */
+.hero-lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-40);
+}
+.hero-lockup img {
+  width: clamp(150px, 24vw, 300px);
+  height: auto;
+  flex-shrink: 0;
+}
+@media (max-width: 700px) {
+  .hero-lockup { flex-direction: column; align-items: flex-start; gap: var(--spacing-24); }
+  .hero-lockup img { width: clamp(140px, 40vw, 200px); }
+}
+
+/* ---------- Footer logo ---------- */
+footer .container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-40);
+  flex-wrap: wrap;
+}
+footer .footer-logo {
+  width: clamp(71px, 8vw, 107px);
+  height: auto;
+  flex-shrink: 0;
+}
+footer .meta { flex: 1; min-width: 260px; }
+
+/* ---------- Stat hairline grid (Superlocal) ---------- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--color-ink);
+}
+.stat-grid > div {
+  padding: var(--spacing-40) var(--spacing-24);
+  border-right: 1px solid var(--color-ink);
+}
+.stat-grid > div:last-child { border-right: 0; }
+.stat-grid .num {
+  font-size: var(--text-heading);
+  font-weight: 700;
+  letter-spacing: var(--tracking-heading);
+  line-height: 1;
+  display: block;
+  margin-bottom: var(--spacing-16);
+}
+.stat-grid .mono-label { color: var(--color-ink); }
+
+/* ---------- Photo plates — raw crops, 0 radius ---------- */
+.plate { border-radius: var(--radius-media); }
+.plate img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+.plate.full-bleed { width: 100%; }
+.plate.tall img { aspect-ratio: 4 / 3; }
+
+.photo-band { padding: 0; }
+.photo-band img, .photo-band video { width: 100%; max-height: 640px; object-fit: cover; display: block; }
+
+/* Rotated gutter caption (Sing-sing) */
+.plate-row { display: grid; grid-template-columns: 1fr 48px; gap: var(--element-gap); }
+.rotated-caption {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  align-self: end;
+}
+
+/* ---------- Story split (About): image left, story text right ---------- */
+.story-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-40);
+  align-items: center;
+}
+.story-split img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius-media);
+}
+.story-split p { font-size: var(--text-subheading); line-height: 1.5; max-width: 34em; }
+@media (max-width: 900px) {
+  .story-split { grid-template-columns: 1fr; }
+}
+
+/* ---------- Ice wash band ---------- */
+.ice-band { background: var(--color-ice-blue); }
+
+/* ---------- Char band ---------- */
+.char-band { background: var(--color-char); color: var(--color-paper); }
+
+/* ---------- Dim band ---------- */
+.dim-band { background: var(--color-paper-dim); }
+
+/* ---------- Song cover grid ---------- */
+.song-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-24);
+}
+.song-card {
+  text-decoration: none;
+  display: block;
+}
+.song-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius-media);
+  margin-bottom: var(--spacing-16);
+}
+.song-card .title {
+  display: block;
+  font-size: var(--text-heading-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--spacing-8);
+}
+.song-card:hover .title { color: var(--color-razz-red); }
+@media (max-width: 700px) {
+  .song-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Member grid ---------- */
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-24);
+  margin-top: var(--spacing-40);
+}
+.member-grid .name { font-size: var(--text-subheading); font-weight: 500; }
+.member-grid .role {
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  margin-top: var(--spacing-8);
+  display: block;
+}
+.member-grid > div { border-top: 1px solid var(--color-ink); padding-top: var(--spacing-16); }
+.member-grid img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius-media);
+  margin-bottom: var(--spacing-16);
+}
+
+/* ---------- Link list ---------- */
+.link-rows { border-top: 1px solid var(--color-ink); }
+.link-rows a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--spacing-16) 0;
+  border-bottom: 1px solid var(--color-ink);
+  text-decoration: none;
+  font-size: var(--text-subheading);
+  font-weight: 500;
+}
+.link-rows a:hover { color: var(--color-razz-red); }
+
+/* ---------- Bottom CTA strip ---------- */
+.cta-strip { text-align: left; }
+.cta-strip .heading { max-width: 16ch; }
+.cta-strip .inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--spacing-40);
+  align-items: center;
+}
+
+/* ---------- Feature band — donor skeleton (two-col dark band, text left / live media right), skinned per DESIGN.md ---------- */
+.feature-band { padding: 0; }
+.feature-band .inner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 480px;
+}
+.feature-band .copy {
+  padding: var(--spacing-80) var(--spacing-40);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--spacing-24);
+}
+.feature-band .copy .heading { max-width: 14ch; }
+.feature-band .media { position: relative; }
+.feature-band video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-media);
+}
+@media (max-width: 900px) {
+  .feature-band .inner-grid { grid-template-columns: 1fr; }
+  .feature-band .media { min-height: 320px; }
+  .feature-band .copy { padding: var(--spacing-56) var(--spacing-24); }
+}
+
+/* ---------- Performances video grid ---------- */
+.perf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-24);
+  align-items: start;
+}
+.perf-grid video {
+  width: 100%;
+  display: block;
+  border-radius: var(--radius-media);
+  background: var(--color-ink);
+}
+.perf-grid video.wide { grid-column: 1 / -1; }
+.perf-grid video.vertical { max-width: 400px; justify-self: center; }
+@media (max-width: 700px) {
+  .perf-grid { grid-template-columns: 1fr; }
+  .perf-grid video.vertical { max-width: 100%; }
+}
+
+/* ---------- Sticky booking bar (About & Music) ---------- */
+.booking-bar {
+  position: fixed;
+  left: var(--spacing-16);
+  bottom: var(--spacing-16);
+  z-index: 90;
+  background: var(--color-razz-red);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+  padding: 10px 14px;
+}
+.booking-bar a {
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: var(--text-eyebrow);
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: var(--tracking-eyebrow);
+}
+.booking-bar button {
+  background: #fff;
+  color: var(--color-razz-red);
+  border: 0;
+  border-radius: var(--radius-buttons);
+  width: 20px; height: 20px;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ---------- Footer ---------- */
+footer { background: var(--color-char); color: var(--color-paper); padding: var(--spacing-56) 0; }
+footer .big-wordmark {
+  font-size: clamp(40px, 8vw, 104px);
+  font-weight: 700;
+  letter-spacing: var(--tracking-display);
+  line-height: 0.95;
+  margin-bottom: var(--spacing-56);
+}
+footer .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-8) var(--spacing-40);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+}
+footer .meta a { color: var(--color-paper); text-decoration: none; }
+footer .meta a:hover { color: var(--color-ice-blue); }
+footer .tick { color: var(--color-leaf-green); }
+
+/* ---------- Hero photo variant (p
